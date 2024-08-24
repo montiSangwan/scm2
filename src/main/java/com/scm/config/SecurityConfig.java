@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 import com.scm.service.SecurityCustomUserDetailService;
 
@@ -30,5 +33,23 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    // filter out the url that will be secured and other will be public
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
+        // url configuration which url are public or private
+        httpSecurity.authorizeHttpRequests(authorize -> {
+            // authorize.requestMatchers("/home", "/register").permitAll(); make these url public
+            authorize.requestMatchers("/user/**").authenticated(); // authenticated url's started with user authenticated
+            authorize.anyRequest().permitAll();
+        });
+
+        // if access denied then login form will come instead of exception
+        // form deafult login used now
+        httpSecurity.formLogin(Customizer.withDefaults());
+
+        return httpSecurity.build();
     }
 }
