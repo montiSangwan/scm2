@@ -4,8 +4,10 @@ import java.util.*;
 
 import com.scm.dao.UserDao;
 import com.scm.entities.User;
+import com.scm.helper.AppConstants;
 import com.scm.helper.ResourceNotFoundException;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,8 +15,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
 
-    public UserServiceImpl(UserDao userDao) {
+    // to store the encoded password in db
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -23,6 +29,12 @@ public class UserServiceImpl implements UserService {
 
         String userId = UUID.randomUUID().toString();
         user.setUserId(userId);
+
+        // password encode
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        // set the user role
+        user.setRoleList(List.of(AppConstants.ROLE_USER));
 
         return userDao.save(user);
     }
