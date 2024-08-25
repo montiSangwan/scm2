@@ -50,30 +50,10 @@ public class SecurityConfig {
         httpSecurity.formLogin(formLogin -> {
             formLogin.loginPage("/login");
             formLogin.loginProcessingUrl("/authenticate"); //login form submit at this url
-            formLogin.successForwardUrl("/user/dashboard");
+            formLogin.defaultSuccessUrl("/user/dashboard"); // error resolved
             /* formLogin.failureForwardUrl("/login?error=true"); this requires postMapping of login*/
             formLogin.usernameParameter("email");
             formLogin.passwordParameter("password");
-
-            /* formLogin.failureHandler(new AuthenticationFailureHandler() {
-
-                @Override
-                public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-                        AuthenticationException exception) throws IOException, ServletException {
-                    throw new UnsupportedOperationException("Unimplemented method 'onAuthenticationFailure'");
-                }
-                
-            });
-
-            formLogin.successHandler(new AuthenticationSuccessHandler() {
-
-                @Override
-                public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                        Authentication authentication) throws IOException, ServletException {
-                    throw new UnsupportedOperationException("Unimplemented method 'onAuthenticationSuccess'");
-                }
-                
-            }); */
         });
 
         // for logout 
