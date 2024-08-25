@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -47,8 +47,42 @@ public class SecurityConfig {
         });
 
         // if access denied then login form will come instead of exception
-        // form deafult login used now
-        httpSecurity.formLogin(Customizer.withDefaults());
+        httpSecurity.formLogin(formLogin -> {
+            formLogin.loginPage("/login");
+            formLogin.loginProcessingUrl("/authenticate"); //login form submit at this url
+            formLogin.successForwardUrl("/user/dashboard");
+            /* formLogin.failureForwardUrl("/login?error=true"); this requires postMapping of login*/
+            formLogin.usernameParameter("email");
+            formLogin.passwordParameter("password");
+
+            /* formLogin.failureHandler(new AuthenticationFailureHandler() {
+
+                @Override
+                public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+                        AuthenticationException exception) throws IOException, ServletException {
+                    throw new UnsupportedOperationException("Unimplemented method 'onAuthenticationFailure'");
+                }
+                
+            });
+
+            formLogin.successHandler(new AuthenticationSuccessHandler() {
+
+                @Override
+                public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                        Authentication authentication) throws IOException, ServletException {
+                    throw new UnsupportedOperationException("Unimplemented method 'onAuthenticationSuccess'");
+                }
+                
+            }); */
+        });
+
+        // for logout 
+        // disable csrf show that logout url hit by any http request
+        httpSecurity.csrf(AbstractHttpConfigurer::disable);
+        httpSecurity.logout(logout -> {
+            logout.logoutUrl("/do-logout");  // url used in dashboard page
+            logout.logoutSuccessUrl("/login?logout=true"); // after successful logout redirect to login
+        });
 
         return httpSecurity.build();
     }
