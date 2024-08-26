@@ -6,6 +6,9 @@
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
 
 
+
+
+
 How to add Login with google setup -> 
 1. Add OAuth2 client starter dependency
 2. Google cloud console 
