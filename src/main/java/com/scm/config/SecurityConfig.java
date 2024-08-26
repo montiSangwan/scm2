@@ -18,6 +18,9 @@ public class SecurityConfig {
     @Autowired
     private SecurityCustomUserDetailService userDetailService;
 
+    @Autowired
+    private OAuthAuthenticationSuccessHandler oAuthAuthenticationSuccessHandler;
+
     // configuraiton of authentication provider for spring security
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -50,7 +53,7 @@ public class SecurityConfig {
         httpSecurity.formLogin(formLogin -> {
             formLogin.loginPage("/login");
             formLogin.loginProcessingUrl("/authenticate"); //login form submit at this url
-            formLogin.defaultSuccessUrl("/user/dashboard"); // error resolved
+            formLogin.defaultSuccessUrl("/user/profile"); // error resolved
             /* formLogin.failureForwardUrl("/login?error=true"); this requires postMapping of login*/
             formLogin.usernameParameter("email");
             formLogin.passwordParameter("password");
@@ -62,6 +65,13 @@ public class SecurityConfig {
         httpSecurity.logout(logout -> {
             logout.logoutUrl("/do-logout");  // url used in dashboard page
             logout.logoutSuccessUrl("/login?logout=true"); // after successful logout redirect to login
+        });
+
+
+        // OAuth configuration
+        httpSecurity.oauth2Login(oauth -> {
+            oauth.loginPage("/login");
+            oauth.successHandler(oAuthAuthenticationSuccessHandler);
         });
 
         return httpSecurity.build();
