@@ -49,6 +49,7 @@ public class SecurityConfig {
             authorize.anyRequest().permitAll();
         });
 
+        // login using username and password
         // if access denied then login form will come instead of exception
         httpSecurity.formLogin(formLogin -> {
             formLogin.loginPage("/login");
@@ -63,7 +64,7 @@ public class SecurityConfig {
         // disable csrf show that logout url hit by any http request
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity.logout(logout -> {
-            logout.logoutUrl("/do-logout");  // url used in dashboard page
+            logout.logoutUrl("/logout");  // url used in dashboard page
             logout.logoutSuccessUrl("/login?logout=true"); // after successful logout redirect to login
         });
 

@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -33,21 +34,43 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
 
+            OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
+            String authorizedClientRegistrationId = token.getAuthorizedClientRegistrationId();
+
             DefaultOAuth2User defaultOAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
 
-            // add new sign in with google user into db
             User user = new User();
-            user.setName(defaultOAuth2User.getAttribute("name").toString());
-            user.setEmail(defaultOAuth2User.getAttribute("email").toString());
-            user.setProfilePic(defaultOAuth2User.getAttribute("picture").toString());
-            user.setPassword("password");
             user.setUserId(UUID.randomUUID().toString());
-            user.setProvider(Providers.GOOGLE);
-            user.setEnabled(true);
-            user.setEmailVerified(true);
-            user.setProviderUserId(defaultOAuth2User.getName());
             user.setRoleList(List.of(AppConstants.ROLE_USER));
-            user.setAbout("This is created by google account");
+            user.setEmailVerified(true);
+            user.setEnabled(true);
+            user.setPassword("dummy");
+
+            if (authorizedClientRegistrationId.equalsIgnoreCase("google")) {
+
+                user.setEmail(defaultOAuth2User.getAttribute("email").toString());
+                user.setProfilePic(defaultOAuth2User.getAttribute("picture").toString());
+                user.setName(defaultOAuth2User.getAttribute("name").toString());
+                user.setProviderUserId(defaultOAuth2User.getName());
+                user.setProvider(Providers.GOOGLE);
+                user.setAbout("This account is created using google.");
+    
+            } else if (authorizedClientRegistrationId.equalsIgnoreCase("github")) {
+
+                String email = defaultOAuth2User.getAttribute("email") != null ? defaultOAuth2User.getAttribute("email").toString()
+                        : defaultOAuth2User.getAttribute("login").toString() + "@gmail.com";
+                String picture = defaultOAuth2User.getAttribute("avatar_url").toString();
+                String name = defaultOAuth2User.getAttribute("login").toString();
+                String providerUserId = defaultOAuth2User.getName();
+    
+                user.setEmail(email);
+                user.setProfilePic(picture);
+                user.setName(name);
+                user.setProviderUserId(providerUserId);
+                user.setProvider(Providers.GITHUB);
+                user.setAbout("This account is created using github");
+            }
+    
 
             User dbUser = userDao.findByEmail(user.getEmail()).orElse(null);
             if (Objects.isNull(dbUser)) {
