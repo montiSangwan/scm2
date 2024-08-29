@@ -16,7 +16,7 @@ public class UsernameHelper {
             DefaultOAuth2User defaultOAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
 
             if (authorizedClientRegistrationId.equalsIgnoreCase("google")) {
-                return defaultOAuth2User.getAttribute("name").toString();
+                return defaultOAuth2User.getAttribute("email").toString();
             } else {
                 return defaultOAuth2User.getAttribute("email") != null ? defaultOAuth2User.getAttribute("email").toString()
                         : defaultOAuth2User.getAttribute("login").toString() + "@gmail.com";
