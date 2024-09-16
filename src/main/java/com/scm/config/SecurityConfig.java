@@ -64,7 +64,7 @@ public class SecurityConfig {
         // disable csrf show that logout url hit by any http request
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity.logout(logout -> {
-            logout.logoutUrl("/logout");  // url used in dashboard page
+            logout.logoutUrl("/logout");  // url used in user_navbar
             logout.logoutSuccessUrl("/login?logout=true"); // after successful logout redirect to login
         });
 
