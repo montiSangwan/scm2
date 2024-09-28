@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-th-replace="~{base :: parent(~{::#content}, ~{::title}, ~{})}">
 <head>
-    <title data-th-text="${loggedInUser}+' | Dashboard'">Dashboard</title>
+    <title data-th-text="${loggedInUser.name}+' | Dashboard'">Dashboard</title>
 </head>
 <body>
     
@@ -12,8 +12,10 @@
             <div data-th-replace="~{user/sidebar :: sidebar}"></div>
         </div>
 
-        <div id="content" class="md:pl-64 pt-20">
-            Dashboard page
+        <div class="sm:pl-64 pt-30" style="height: 1000px">
+            <div class="flex items-center justify-center md:pt-32 flex-col">
+                <h1>Dashboard page</h1>
+            </div>
         </div>
 
     </div>
