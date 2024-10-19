@@ -10,7 +10,7 @@ import com.scm.entities.User;
 import com.scm.helper.UsernameHelper;
 import com.scm.service.UserService;
 
-// RootController -> ye controller har ek request ke liye chle ga
+// RootController -> ye controller har ek request ke liye chle ga user ko add krne ke liye
 
 // ControllerAdvice -> is controller ka method har ek request me add ho jaaye ga
 @ControllerAdvice
