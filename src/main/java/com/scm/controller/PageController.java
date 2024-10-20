@@ -72,6 +72,11 @@ public class PageController {
 
         // validate form data
         if (bindingResult.hasErrors()) {
+            httpSession.setAttribute("message", Message.builder()
+                    .content("Please correct the following errors")
+                    .type(MessageType.red)
+                    .build());
+                    
             return "register";
         }
 

@@ -33,41 +33,45 @@
                                 <!--name-->
                                 <div class="mb-3">
                                     <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Name</label>
-                                    <div class="relative mb-6">
+                                    <div class="relative mb-1">
                                       <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                         <i class="fa-solid fa-user w-4 h-4"></i>
                                       </div>
                                       <!--* is used to direct access field of contactForm object-->
                                       <input data-th-field="*{name}" type="text" id="input-group-1" class="pl-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name">
                                     </div>
+                                    <p data-th-if="${#fields.hasErrors('name')}" data-th-errors="*{name}" class="text-red-600 px-1 py-2">Name is required</p>
                                 </div>
 
                                 <!--email-->
                                 <div class="mb-3">
                                     <label for="input-group-2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Email</label>
-                                    <div class="relative mb-6">
+                                    <div class="relative mb-1">
                                       <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                         <i class="fa-solid fa-envelope w-4 h-4"></i>
                                       </div>
                                       <input data-th-field="*{email}" type="email" id="input-group-2" class="pl-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="email@gmail.com">
                                     </div>
+                                    <p data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}" class="text-red-600 px-1 py-2">Invalid Email Address</p>
                                 </div>
 
                                 <!--phone number-->
                                 <div class="mb-3">
                                     <label for="input-group-3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
-                                    <div class="relative mb-6">
+                                    <div class="relative mb-1">
                                       <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                         <i class="fa-solid fa-phone w-4 h-4"></i>
                                       </div>
                                       <input data-th-field="*{phoneNumber}" type="text" id="input-group-3" class="pl-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1234567890">
                                     </div>
+                                    <p data-th-if="${#fields.hasErrors('phoneNumber')}" data-th-errors="*{phoneNumber}" class="text-red-600 px-1 py-2">Phone Number is required</p>
                                 </div>
 
                                 <!--address-->
                                 <div class="mb-3">
                                     <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
                                     <textarea data-th-field="*{address}" id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write contact address here..."></textarea>
+                                    <p data-th-if="${#fields.hasErrors('address')}" data-th-errors="*{address}" class="text-red-600 px-1 py-2">Address is required</p>
                                 </div>
 
                                 <!--description-->

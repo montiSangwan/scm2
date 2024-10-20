@@ -3,6 +3,7 @@ package com.scm.controller;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import com.scm.service.ContactService;
 import com.scm.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/user/contacts")
@@ -42,8 +44,19 @@ public class ContactController {
     }
 
     @PostMapping("/process-contact")
-    public String processContactForm(@ModelAttribute ContactForm contactForm, Authentication authentication,
-            HttpSession httpSession) {
+    public String processContactForm(@Valid @ModelAttribute ContactForm contactForm, Authentication authentication,
+            HttpSession httpSession, BindingResult bindingResult) {
+
+        // validate form data
+        if (bindingResult.hasErrors()) {
+
+            httpSession.setAttribute("message", Message.builder()
+                    .content("Please correct the following errors")
+                    .type(MessageType.red)
+                    .build());
+
+            return "user/add_contact";
+        }
 
         String userName = UsernameHelper.getEmailOfLoggedInUser(authentication);
         User user = userService.getUserByEmail(userName);
