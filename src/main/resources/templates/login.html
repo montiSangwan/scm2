@@ -8,9 +8,10 @@
     <div id="content">
 
         <div class="grid grid-cols-12 mt-5">
-            <div class="col-span-4 md:col-span-2 lg:col-span-3 xl:col-span-4"></div>       
-            <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-4">
-                <div class="block w-28 p-6 border-t-4 bg-white border-green-600 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-blue-700 dark:hover:bg-gray-700">
+            <div class="col-span-3"></div> <!--empty left 3 grid-->
+
+                    <div class="col-span-12 md:col-span-6">
+                        <div class="card block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Login Here</h5>
                     <p class="font-normal text-gray-400 dark:text-gray-400">Start managing contacts..</p>
@@ -47,7 +48,7 @@
                         <!--github button-->
                         <!--by default url for sign in with google button submit - '/oauth2/authorization/github' -->
                         <a data-th-href="@{'/oauth2/authorization/github'}" type="button" class="py-2 px-2 w-1/2 flex justify-center items-center bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-                            <i class="fa-brands fa-github"></i>
+                            <i class="fa-brands fa-github mr-3"></i>
                             Sign in with GitHub
                         </a>
                         

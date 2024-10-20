@@ -13,6 +13,7 @@
         </div>
 
         <div class="sm:pl-64 pt-30" style="height: 1000px">
+            <div class="flex items-center justify-center md:pt-32 flex-col">
                 <div class="grid grid-cols-12">
                     <div class="col-span-3"></div>
 
@@ -21,8 +22,8 @@
 
                             <div data-th-replace="message::messagebox"></div>
 
-                            <h1 class="2xl font-semibold">Add Contact</h1>
-                            <p class="text-gray-600">This contact will be stored on cloud...</p>
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Add Contact</h5>
+                            <p class="font-normal text-gray-400 dark:text-gray-400">This contact will be stored on cloud...</p>
 
                             <form data-th-action="@{'/user/contacts/add'}" method="post" class="mt-8">
 
@@ -33,29 +34,29 @@
                                       <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                         <i class="fa-solid fa-user w-4 h-4"></i>
                                       </div>
-                                      <input type="text" id="input-group-1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name">
+                                      <input type="text" id="input-group-1" class="pl-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name">
                                     </div>
                                 </div>
 
                                 <!--email-->
                                 <div class="mb-3">
-                                    <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Email</label>
+                                    <label for="input-group-2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Email</label>
                                     <div class="relative mb-6">
                                       <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                         <i class="fa-solid fa-user w-4 h-4"></i>
                                       </div>
-                                      <input type="email" id="input-group-1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="email@gmail.com">
+                                      <input type="email" id="input-group-2" class="pl-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="email@gmail.com">
                                     </div>
                                 </div>
 
                                 <!--phone number-->
                                 <div class="mb-3">
-                                    <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
+                                    <label for="input-group-3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
                                     <div class="relative mb-6">
                                       <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                         <i class="fa-solid fa-user w-4 h-4"></i>
                                       </div>
-                                      <input type="text" id="input-group-1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1234567890">
+                                      <input type="text" id="input-group-3" class="pl-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1234567890">
                                     </div>
                                 </div>
 
@@ -67,8 +68,8 @@
 
                                 <!--description-->
                                 <div class="mb-3">
-                                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                                    <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write about your contact here..."></textarea>
+                                    <label for="message1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                                    <textarea id="message1" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write about your contact here..."></textarea>
                                 </div>
 
                                 <!--profile pic of contact-->
@@ -82,24 +83,24 @@
                                     <div class="w-full">
                                         <!--facebook link-->
                                         <div class="mb-3">
-                                            <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Facebook Link</label>
+                                            <label for="input-group-4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Facebook Link</label>
                                             <div class="relative mb-6">
                                               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                                 <i class="fa-brands fa-facebook w-4 h-4"></i>
                                               </div>
-                                              <input type="text" id="input-group-1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://facebook.com/Name">
+                                              <input type="text" id="input-group-4" class="pl-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://facebook.com/Name">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="w-full">
                                         <!--linkedin link-->
                                         <div class="mb-3">
-                                            <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">LinkedIn Link</label>
+                                            <label for="input-group-5" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">LinkedIn Link</label>
                                             <div class="relative mb-6">
                                               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                                 <i class="fa-brands fa-linkedin w-4 h-4"></i>
                                               </div>
-                                              <input type="text" id="input-group-1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://www.linkedin.com/in/Name">
+                                              <input type="text" id="input-group-5" class="pl-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://www.linkedin.com/in/Name">
                                             </div>
                                         </div>
                                     </div>
