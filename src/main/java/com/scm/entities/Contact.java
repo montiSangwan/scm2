@@ -9,12 +9,11 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Contact {
@@ -37,6 +36,22 @@ public class Contact {
 
     @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SocialLink> socialLinks = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", picture='" + picture + '\'' +
+                ", description='" + description + '\'' +
+                ", favourite=" + favourite +
+                ", websiteLink='" + websiteLink + '\'' +
+                ", linkedInLink='" + linkedInLink + '\'' +
+                '}';
+    }
     
 }
 

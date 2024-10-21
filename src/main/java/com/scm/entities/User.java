@@ -3,6 +3,7 @@ package com.scm.entities;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,15 +17,13 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /*Spring Security only accept UserDeatils object so to reuse User we implements UserDeatils in User */
 /*Email used as username while login */
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
@@ -49,7 +48,15 @@ public class User implements UserDetails {
     private Providers provider = Providers.SELF;
     private String providerUserId;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    /*
+    * The LazyInitializationException in Hibernate typically occurs when you attempt to access a lazily-loaded association outside of an active Hibernate session.
+
+    *  In your case, it seems like you might be trying to access the contacts list in your User entity after the session has closed, likely in a situation
+        where the user details are being logged or printed.
+
+     * Eager Fetching -> not a good method to use instead use DTO.
+     */
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contact> contacts = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -66,6 +73,31 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return this.email;
-    } 
+    }
+
+    /*
+    * The StackOverflowError indicates that you likely have a circular reference in your entity relationships, which is causing infinite recursion when trying
+        to serialize your objects (for example, when calling toString() or during JSON serialization).
+
+    * When you fetch User eagerly, it retrieves the associated contacts, and each Contact has a reference back to the User.
+
+    * Override toString()
+     */
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + (password != null ? "**" : null) + '\'' +  // Masking the password for security
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", about='" + about + '\'' +
+                ", profilePic='" + profilePic + '\'' +
+                ", enabled=" + enabled +
+                ", emailVerified=" + emailVerified +
+                ", phoneVerified=" + phoneVerified +
+                ", provider=" + provider +
+                ", providerUserId='" + providerUserId + '\'' +
+                '}';
+    }
 
 }

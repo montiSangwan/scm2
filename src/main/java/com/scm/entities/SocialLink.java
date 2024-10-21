@@ -5,12 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class SocialLink {
@@ -23,4 +22,13 @@ public class SocialLink {
 
     @ManyToOne
     private Contact contact;
+
+    @Override
+    public String toString() {
+        return "Resource{" +
+                "id=" + id +
+                ", link='" + link + '\'' +
+                ", title='" + title + '\'' +
+                '}';
+    }
 }
