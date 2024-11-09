@@ -1,5 +1,7 @@
 package com.scm.controller;
 
+import java.util.UUID;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import com.scm.helper.Message;
 import com.scm.helper.MessageType;
 import com.scm.helper.UsernameHelper;
 import com.scm.service.ContactService;
+import com.scm.service.ImageService;
 import com.scm.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -28,9 +31,12 @@ public class ContactController {
 
     private final UserService userService;
 
-    public ContactController(ContactService contactService, UserService userService) {
+    private final ImageService imageService;
+
+    public ContactController(ContactService contactService, UserService userService, ImageService imageService) {
         this.contactService = contactService;
         this.userService = userService;
+        this.imageService = imageService;
     }
 
     // to receive contactForm data we will send empty contactForm object in model
@@ -61,6 +67,10 @@ public class ContactController {
         String userName = UsernameHelper.getEmailOfLoggedInUser(authentication);
         User user = userService.getUserByEmail(userName);
 
+        // upload image on cloud/server
+        String imageFileName = UUID.randomUUID().toString();
+        String fileURL = imageService.uploadImage(contactForm.getContactImage(), imageFileName);
+
         Contact contact = new Contact();
         contact.setName(contactForm.getName());
         contact.setEmail(contactForm.getEmail());
@@ -71,6 +81,9 @@ public class ContactController {
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setLinkedInLink(contactForm.getLinkedInLink());
         contact.setUser(user);
+        
+        contact.setPicture(fileURL);
+        contact.setCloudinaryImagePublicId(imageFileName);
 
         Contact savedContact = contactService.save(contact);
         System.out.println(savedContact);

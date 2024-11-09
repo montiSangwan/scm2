@@ -25,9 +25,11 @@
                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Add Contact</h5>
                             <p class="font-normal text-gray-400 dark:text-gray-400">This contact will be stored on cloud...</p>
 
+                            <!--enctype used to send multi part data-->
                             <form data-th-action="@{'/user/contacts/process-contact'}" 
                                     data-th-object="${contactForm}"
                                     method="post" 
+                                    enctype="multipart/form-data"
                                     class="mt-8">
 
                                 <!--name-->
@@ -83,7 +85,7 @@
                                 <!--profile pic of contact-->
                                 <div class="mb-3">
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload profile pic of Contact</label>
-                                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
+                                    <input data-th-field="*{contactImage}" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
                                 </div>
 
                                 <!--social links-->
