@@ -25,7 +25,7 @@ public class ImageServiceImpl implements ImageService {
         try {
             byte[] data = new byte[contactImage.getInputStream().available()];
 
-            // updata contact image content to byte array data
+            // update contact image content to byte array data
             contactImage.getInputStream().read(data);
 
             // upload data to cloudinary

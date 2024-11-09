@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-th-replace="~{base :: parent(~{::#content}, ~{::title}, ~{})}">
+<html lang="en" data-th-replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
 <head>
     <title>Add Contact</title>
 </head>
@@ -58,7 +58,7 @@
                                 </div>
 
                                 <!--phone number-->
-                                <div class="mb-3">
+                                <div class="mb-4">
                                     <label for="input-group-3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
                                     <div class="relative mb-1">
                                       <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
@@ -67,6 +67,12 @@
                                       <input data-th-field="*{phoneNumber}" type="text" id="input-group-3" class="pl-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1234567890">
                                     </div>
                                     <p data-th-if="${#fields.hasErrors('phoneNumber')}" data-th-errors="*{phoneNumber}" class="text-red-600 px-1 py-2">Phone Number is required</p>
+                                </div>
+
+                                <!--favourite contact checkbox-->
+                                <div class="flex items-center mb-4">
+                                    <input data-th-field="*{favorite}" type="checkbox" id="default-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Is this is your favourite Contact ?</label>
                                 </div>
 
                                 <!--address-->
@@ -80,12 +86,6 @@
                                 <div class="mb-3">
                                     <label for="message1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
                                     <textarea data-th-field="*{description}" id="message1" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write about your contact here..."></textarea>
-                                </div>
-
-                                <!--profile pic of contact-->
-                                <div class="mb-3">
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload profile pic of Contact</label>
-                                    <input data-th-field="*{contactImage}" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
                                 </div>
 
                                 <!--social links-->
@@ -116,10 +116,14 @@
                                     </div>
                                 </div>
 
-                                <!--favourite contact checkbox-->
-                                <div class="flex items-center mb-3">
-                                    <input data-th-field="*{favorite}" type="checkbox" id="default-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Is this is your favourite Contact ?</label>
+
+                                <!--profile pic of contact-->
+                                <div class="mb-5">
+                                    <label class="block mb-4 text-sm font-medium text-gray-900 dark:text-white" for="image_file_input">Upload profile pic of Contact</label>
+                                    <input data-th-field="*{contactImage}" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="image_file_input" type="file">
+
+                                    <!--image preview only when if selected-->
+                                    <img class="max-h-52 mx-auto rounded-lg shadow m-3 mt-4" src="" id="upload_image_preview" alt="" />
                                 </div>
 
                                 <div class="button_container mb-3 text-center">
@@ -137,6 +141,9 @@
         </div>
 
     </div>
+
+    
+    <script data-th-src="@{'/js/admin.js'}"></script>
 
 </body>
 </html>
