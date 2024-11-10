@@ -68,10 +68,8 @@
                                     <!--data-th-src="@{${contact.picture}}" used for links/url-->
                                     <!--if error occured in profile image then show deafult image-->
                                     <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                        <img 
-                                            onerror="this.src='https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png'"
-                                            data-th-src="@{${contact.picture}}" class="w-10 h-10 rounded-full" alt="Jese image"
-                                        >
+                                        <img data-th-src="@{${contact.picture}}" class="w-10 h-10 rounded-full" alt="Profile Image">
+
                                         <div class="ps-3">
                                             <div data-th-text="${contact.name}" class="text-base font-semibold"></div>
                                             <div data-th-text="${contact.email}" class="font-normal text-gray-500"></div>
