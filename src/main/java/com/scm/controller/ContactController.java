@@ -1,5 +1,6 @@
 package com.scm.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.security.core.Authentication;
@@ -97,5 +98,19 @@ public class ContactController {
 
         // redirect to add contact page
         return "redirect:/user/contacts/add";
+    }
+
+    @RequestMapping
+    public String viewContacts(Model model, Authentication authentication) {
+
+        // find email of logged in user through authentication
+        String emailOfLoggedInUser = UsernameHelper.getEmailOfLoggedInUser(authentication);
+
+        User user = userService.getUserByEmail(emailOfLoggedInUser);
+
+        List<Contact> contacts = contactService.getByUser(user);
+        model.addAttribute("contacts", contacts);
+
+        return "/user/contacts";
     }
 }

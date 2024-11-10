@@ -18,11 +18,9 @@ public interface ContactService {
     List<Contact> getAll();
 
     // get contact by id
-
     Contact getById(String id);
 
     // delete contact
-
     void delete(String id);
 
     // search contact
@@ -36,6 +34,6 @@ public interface ContactService {
     // get contacts by userId
     List<Contact> getByUserId(String userId);
 
-    Page<Contact> getByUser(User user, int page, int size, String sortField, String sortDirection);
+    List<Contact> getByUser(User user);
 
 }

@@ -19,6 +19,8 @@ public interface ContactDao extends JpaRepository<Contact, String> {
     // custom finder method
     Page<Contact> getByUser(User user, Pageable pageable);
 
+    List<Contact> getByUser(User user);
+
     // custom query method
     @Query("SELECT c FROM Contact c WHERE c.user.id = :userId")
     List<Contact> getByUserId(@Param("userId") String userId);

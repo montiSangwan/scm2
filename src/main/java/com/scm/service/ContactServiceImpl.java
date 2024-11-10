@@ -85,8 +85,8 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public Page<Contact> getByUser(User user, int page, int size, String sortField, String sortDirection) {
-        throw new UnsupportedOperationException("Unimplemented method 'getByUser'");
+    public List<Contact> getByUser(User user) {
+        return contactDao.getByUser(user);
     }
 
 }
