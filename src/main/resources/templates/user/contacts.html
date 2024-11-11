@@ -58,9 +58,10 @@
 
                             <!--body of table-->
                             <!--data-th-each="contact: ${contacts}" for iteration on list-->
+                            <!--pageContact.getContent() is used to get content of Page object-->
                             <tbody>
                                 <tr 
-                                    data-th-each="contact: ${contacts}"
+                                    data-th-each="contact: ${pageContact.getContent()}"
                                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                                 >
                                     

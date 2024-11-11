@@ -1,8 +1,8 @@
 package com.scm.controller;
 
-import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.scm.entities.Contact;
 import com.scm.entities.User;
@@ -100,16 +101,28 @@ public class ContactController {
         return "redirect:/user/contacts/add";
     }
 
+    /*
+     * page -> which page do you want to see
+     * size -> how many contacts you want to see on that page
+     * sortBy -> on which basis are you wanting sorting
+     * direction -> direction of sorting
+     */
+    // request param used by /contacts?page=1&size=10?sortBy=name
     @RequestMapping
-    public String viewContacts(Model model, Authentication authentication) {
+    public String viewContacts(Model model, Authentication authentication, 
+            @RequestParam(value = "page", defaultValue = "0") int page, 
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction) {
 
         // find email of logged in user through authentication
         String emailOfLoggedInUser = UsernameHelper.getEmailOfLoggedInUser(authentication);
 
+        // find user from user service using email
         User user = userService.getUserByEmail(emailOfLoggedInUser);
 
-        List<Contact> contacts = contactService.getByUser(user);
-        model.addAttribute("contacts", contacts);
+        Page<Contact> pageContact = contactService.getByUser(user, page, size, sortBy, direction);
+        model.addAttribute("pageContact", pageContact);
 
         return "/user/contacts";
     }

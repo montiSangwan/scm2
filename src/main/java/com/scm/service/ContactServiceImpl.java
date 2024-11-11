@@ -1,9 +1,12 @@
 package com.scm.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.scm.dao.ContactDao;
@@ -85,8 +88,14 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public List<Contact> getByUser(User user) {
-        return contactDao.getByUser(user);
+    public Page<Contact> getByUser(User user, int page, int size, String sortBy, String direction) {
+
+        // create sort object used for sorting from sortBy and direction
+        Sort sort = Objects.equals(direction, "desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+
+        PageRequest pageable = PageRequest.of(page, size, sort);
+        
+        return contactDao.getByUser(user, pageable);
     }
 
 }

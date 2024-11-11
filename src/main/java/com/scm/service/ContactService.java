@@ -34,6 +34,6 @@ public interface ContactService {
     // get contacts by userId
     List<Contact> getByUserId(String userId);
 
-    List<Contact> getByUser(User user);
+    Page<Contact> getByUser(User user, int page, int size, String sortBy, String direction);
 
 }
