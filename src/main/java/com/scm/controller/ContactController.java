@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.scm.entities.Contact;
 import com.scm.entities.User;
 import com.scm.forms.ContactForm;
+import com.scm.forms.ContactSearchForm;
 import com.scm.helper.Message;
 import com.scm.helper.MessageType;
 import com.scm.helper.UsernameHelper;
@@ -129,18 +130,24 @@ public class ContactController {
         Page<Contact> pageContact = contactService.getByUser(user, page, size, sortBy, direction);
         model.addAttribute("pageContact", pageContact);
 
+        model.addAttribute("contactSearchForm", new ContactSearchForm());
+
         return "user/contacts";
     }
 
+    // ModelAttribute if we used object's field in request param
     @RequestMapping("/search")
     public String searchHandler(Model model, Authentication authentication,
-            @RequestParam(value = "field", required = false) String field, 
-            @RequestParam(value = "keyword", required = false) String keyword,
+            @ModelAttribute ContactSearchForm contactSearchForm,
             @RequestParam(value = "page", defaultValue = "0") int page, 
             @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
             @RequestParam(value = "direction", defaultValue = "asc") String direction) {
     
+
+        String field = contactSearchForm.getField();
+        String keyword = contactSearchForm.getKeyword();
+
         String emailOfLoggedInUser = UsernameHelper.getEmailOfLoggedInUser(authentication);
         User user = userService.getUserByEmail(emailOfLoggedInUser);
 
@@ -158,6 +165,7 @@ public class ContactController {
         }
 
         model.addAttribute("pageContact", pageContact);
+        model.addAttribute("contactSearchForm", contactSearchForm);
         return "user/search";
     }
 }
