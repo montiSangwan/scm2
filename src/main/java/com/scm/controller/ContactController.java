@@ -1,7 +1,12 @@
 package com.scm.controller;
 
+import static com.scm.helper.AppConstants.SEARCH_BY_EMAIL;
+import static com.scm.helper.AppConstants.SEARCH_BY_NAME;
+import static com.scm.helper.AppConstants.SEARCH_BY_PHONE_NUMBER;
+
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -124,6 +129,35 @@ public class ContactController {
         Page<Contact> pageContact = contactService.getByUser(user, page, size, sortBy, direction);
         model.addAttribute("pageContact", pageContact);
 
-        return "/user/contacts";
+        return "user/contacts";
+    }
+
+    @RequestMapping("/search")
+    public String searchHandler(Model model, Authentication authentication,
+            @RequestParam(value = "field", required = false) String field, 
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "page", defaultValue = "0") int page, 
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction) {
+    
+        String emailOfLoggedInUser = UsernameHelper.getEmailOfLoggedInUser(authentication);
+        User user = userService.getUserByEmail(emailOfLoggedInUser);
+
+        Page<Contact> pageContact = null;
+        if (StringUtils.isNotBlank(field)) {
+            if (field.equalsIgnoreCase(SEARCH_BY_NAME)) {
+                pageContact = contactService.searchByName(keyword, size, page, sortBy, direction, user);
+            } else if (field.equalsIgnoreCase(SEARCH_BY_EMAIL)) {
+                pageContact = contactService.searchByEmail(keyword, size, page, sortBy, direction, user);
+            } else if (field.equalsIgnoreCase(SEARCH_BY_PHONE_NUMBER)) {
+                pageContact = contactService.searchByPhoneNumber(keyword, size, page, sortBy, direction, user);
+            }
+        } else {
+            pageContact = contactService.searchByName(keyword, size, page, sortBy, direction, user);
+        }
+
+        model.addAttribute("pageContact", pageContact);
+        return "user/search";
     }
 }

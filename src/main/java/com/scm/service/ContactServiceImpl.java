@@ -67,19 +67,31 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public Page<Contact> searchByName(String nameKeyword, int size, int page, String sortBy, String order, User user) {
-        throw new UnsupportedOperationException("Unimplemented method 'searchByName'");
+
+        Sort sort = Objects.equals(order, "desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+
+        return contactDao.findByUserAndName(user, nameKeyword, pageRequest);
     }
 
     @Override
     public Page<Contact> searchByEmail(String emailKeyword, int size, int page, String sortBy, String order,
             User user) {
-        throw new UnsupportedOperationException("Unimplemented method 'searchByEmail'");
+
+        Sort sort = Objects.equals(order, "desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        
+        return contactDao.findByUserAndEmail(user, emailKeyword, pageRequest);
     }
 
     @Override
     public Page<Contact> searchByPhoneNumber(String phoneNumberKeyword, int size, int page, String sortBy, String order,
             User user) {
-        throw new UnsupportedOperationException("Unimplemented method 'searchByPhoneNumber'");
+        
+        Sort sort = Objects.equals(order, "desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+                
+        return contactDao.findByUserAndPhoneNumber(user, phoneNumberKeyword, pageRequest);
     }
 
     @Override
@@ -94,8 +106,8 @@ public class ContactServiceImpl implements ContactService {
         Sort sort = Objects.equals(direction, "desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
 
         PageRequest pageable = PageRequest.of(page, size, sort);
-        
-        return contactDao.getByUser(user, pageable);
+
+        return contactDao.findByUser(user, pageable);
     }
 
 }
