@@ -130,6 +130,7 @@ public class ContactController {
         Page<Contact> pageContact = contactService.getByUser(user, page, size, sortBy, direction);
         model.addAttribute("pageContact", pageContact);
 
+        model.addAttribute("pageSize", size);
         model.addAttribute("contactSearchForm", new ContactSearchForm());
 
         return "user/contacts";
@@ -164,6 +165,7 @@ public class ContactController {
             pageContact = contactService.searchByName(keyword, size, page, sortBy, direction, user);
         }
 
+        model.addAttribute("pageSize", size);
         model.addAttribute("pageContact", pageContact);
         model.addAttribute("contactSearchForm", contactSearchForm);
         return "user/search";
