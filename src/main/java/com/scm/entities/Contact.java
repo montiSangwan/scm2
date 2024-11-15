@@ -2,6 +2,8 @@ package com.scm.entities;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,6 +36,7 @@ public class Contact {
     private String cloudinaryImagePublicId;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -58,3 +61,4 @@ public class Contact {
 }
 
 // Builder will not set default value -> so remove it
+// @JsonIgnore used to prevent from recursive call or we can use DTO object
