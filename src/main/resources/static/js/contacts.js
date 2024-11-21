@@ -1,5 +1,7 @@
 // used for show page of contact
 
+const baseURL = "http://localhost:8081";
+
 const viewContactModal = document.getElementById("view_contact_modal")
 
 // options with default values
@@ -42,7 +44,7 @@ function closeContactModal() {
 // function to fetch data of contact from id using api controller
 async function loadContactData(id) {
     try {
-        const data = await (await fetch('http://localhost:8081/api/contacts/${id}')).json();
+        const data = await (await fetch(`${baseURL}/api/contacts/${id}`)).json();
 
         document.querySelector("#contact_name").innerHTML = data.name;
         document.querySelector("#contact_email").innerHTML = data.email;
@@ -66,4 +68,29 @@ async function loadContactData(id) {
     } catch(error) {
         console.log(error)
     }
+}
+
+async function deleteContact(id) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            // url to hit from js for delete
+            const url = `${baseURL}/user/contacts/delete/` + id;
+            window.location.replace(url);
+            
+            Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+            });
+        }
+    });
 }

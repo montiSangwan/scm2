@@ -7,6 +7,9 @@ RUN TAILWIND CSS ON EACH PAGE
 <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
 
+Add for sweet alert installation
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
 

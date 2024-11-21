@@ -21,6 +21,8 @@
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
 
+                        <div data-th-replace="message :: messagebox"></div>
+
                         <form 
                             data-th-action="@{'/user/contacts/search'}" 
                             data-th-object="${contactSearchForm}">
@@ -127,7 +129,7 @@
                                     <td class="px-6 py-4">
                                         <div>
                                             <!-- delete contact -->
-                                            <a href="#">
+                                            <a th:onclick="deleteContact([[${contact.id}]])">
                                               <i class="fa-solid w-6 h-6 fa-trash"></i>
                                             </a>
 
@@ -137,9 +139,9 @@
                                             </a>
                     
                                             <!-- viewcontact -->
-                                            <a href="#">
+                                            <button th:onclick="loadContactdata([[${contact.id}]])">
                                               <i class="fa-solid fa-eye"></i>
-                                            </a>
+                                            </button>
                                           </div>
                                     </td>
 
@@ -205,9 +207,16 @@
 
                 </div>
             </div>
+
+            <!--show page of contact-->
+            <div data-th-replace="~{user/contact_modals :: contact}"></div>
+
         </div>
 
     </div>
+
+    <!--script used fo show page of contact-->
+    <script data-th-src="@{'/js/contacts.js'}"></script>
 
 </body>
 </html>

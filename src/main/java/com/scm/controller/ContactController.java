@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -169,5 +170,19 @@ public class ContactController {
         model.addAttribute("pageContact", pageContact);
         model.addAttribute("contactSearchForm", contactSearchForm);
         return "user/search";
+    }
+
+    @RequestMapping("/delete/{id}")
+    public String delete(@PathVariable("id") String contactId, HttpSession httpSession) {
+        contactService.delete(contactId);
+
+        // message = "Contact deleted successful"
+        Message message = Message.builder()
+                .content("Contact deleted successfully")
+                .type(MessageType.green)
+                .build();
+        httpSession.setAttribute("message", message);
+
+        return "redirect:/user/contacts";
     }
 }
