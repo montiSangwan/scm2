@@ -39,7 +39,7 @@ public class Contact {
     @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "contact", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SocialLink> socialLinks = new ArrayList<>();
 
     @Override

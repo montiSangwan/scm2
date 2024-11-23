@@ -51,12 +51,14 @@ public class User implements UserDetails {
     /*
     * The LazyInitializationException in Hibernate typically occurs when you attempt to access a lazily-loaded association outside of an active Hibernate session.
 
-    *  In your case, it seems like you might be trying to access the contacts list in your User entity after the session has closed, likely in a situation
+    * In your case, it seems like you might be trying to access the contacts list in your User entity after the session has closed, likely in a situation
         where the user details are being logged or printed.
 
-     * Eager Fetching -> not a good method to use instead use DTO.
-     */
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    * Eager Fetching -> not a good method to use instead use DTO.
+
+    * Changed to FetchType - LAZY, in EAGER contact are not deleted
+    */
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contact> contacts = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
