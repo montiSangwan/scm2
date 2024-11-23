@@ -123,7 +123,7 @@ public class ContactController {
             @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
             @RequestParam(value = "direction", defaultValue = "asc") String direction) {
 
-        // find email of logged in user through authentication
+        // find email of logged-in user through authentication
         String emailOfLoggedInUser = UsernameHelper.getEmailOfLoggedInUser(authentication);
 
         // find user from user service using email
