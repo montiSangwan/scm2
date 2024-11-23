@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-th-replace="~{base :: parent(~{::#content}, ~{::title}, ~{})}">
+<head>
+    <title data-th-text="${loggedInUser.name}+' | Contact'">Contact</title>
+</head>
+
+<body>
+    <div id="content">
+        <!-- User logged-in sidebar -->
+        <div th:if="${loggedInUser}">
+            <div data-th-replace="~{user/sidebar :: sidebar}"></div>
+        </div>
+
+        <div class="grid grid-cols-12 mt-5">
+            <div class="col-span-3"></div>
+            <!--empty left 3 grid-->
+
+            <div class="col-span-12 md:col-span-6">
+                <div class="card mt-10 block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+                    <!-- Header Section with Contact Name, Email, and Phone Number -->
+                    <div class="flex justify-center p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                        <div class="p-5 flex flex-col justify-center items-center space-y-2">
+                        
+                            <!-- Contact Image -->
+                            <img
+                                onerror="this.src='https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png'"
+                                class="w-32 h-32 rounded-full"
+                                data-th-src="@{${contact.picture}}"
+                                alt="Contact Image"
+                            />
+
+                            <!-- Contact Name -->
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white"
+                                data-th-text="${contact.name}">
+                            </h3>
+
+                            <!-- Contact Email -->
+                            <p class="text-gray-600 dark:text-gray-300"
+                                data-th-text="${contact.email}">
+                            </p>
+
+                            <!-- Contact Phone Number -->
+                            <p class="text-gray-600 dark:text-gray-300"
+                                data-th-text="${contact.phoneNumber}">
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Other Contact Information -->
+                    <div class="p-4 md:p-5 space-y-4">
+                        <div class="relative overflow-x-auto">
+                            <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400">
+                                
+                                <tbody>
+                                    <!-- Address -->
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <i class="fa-solid fa-location-dot w-6 h-6"></i>
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            <span data-th-text="${contact.address}"></span>
+                                        </td>
+                                    </tr>
+
+                                    <!-- About -->
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <i class="fa-solid fa-user w-6 h-6"></i>
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            <span data-th-text="${contact.description}"></span>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Favourite Status -->
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <i class="fa-regular fa-heart w-6 h-6"></i>
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            <span th:if="${contact.favourite}">
+                                                <!-- Show 5 yellow stars if the contact is a favorite -->
+                                                <i class="fas fa-star text-yellow-400"></i>
+                                                <i class="fas fa-star text-yellow-400"></i>
+                                                <i class="fas fa-star text-yellow-400"></i>
+                                                <i class="fas fa-star text-yellow-400"></i>
+                                                <i class="fas fa-star text-yellow-400"></i>
+                                            </span>
+                                            <span th:unless="${contact.favourite}">
+                                                <!-- If not a favorite, display text -->
+                                                Not Favorite Contact
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Facebook/Website Link -->
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <i class="fa-solid fa-earth-americas w-6 h-6"></i>
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            <a data-th-href="@{${contact.websiteLink}}" data-th-text="${contact.websiteLink}"></a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- LinkedIn Link -->
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <i class="fa-brands fa-linkedin-in w-6 h-6"></i>
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            <a data-th-href="@{${contact.linkedInLink}}" data-th-text="${contact.linkedInLink}"></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Button to go back to the contacts listing page -->
+                    <div class="p-4 md:p-5 flex justify-center">
+                        <a data-th-href="@{'/user/contacts'}" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">
+                            Back to Contacts
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

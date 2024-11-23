@@ -4,6 +4,7 @@ import static com.scm.helper.AppConstants.SEARCH_BY_EMAIL;
 import static com.scm.helper.AppConstants.SEARCH_BY_NAME;
 import static com.scm.helper.AppConstants.SEARCH_BY_PHONE_NUMBER;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
@@ -184,5 +185,16 @@ public class ContactController {
         httpSession.setAttribute("message", message);
 
         return "redirect:/user/contacts";
+    }
+
+    @RequestMapping("/{id}")
+    public String viewContact(@PathVariable("id") String contactId, Model model) {
+        Contact contact = contactService.getById(contactId);
+        if (Objects.nonNull(contact)) {
+            model.addAttribute("contact", contact);
+            return "user/view_contact";
+        } else {
+            return "redirect:/user/contacts";
+        }
     }
 }
