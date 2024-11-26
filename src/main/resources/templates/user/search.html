@@ -135,12 +135,12 @@
                                             </a>
 
                                             <!-- update contact -->
-                                            <a href="#">
+                                            <a data-th-href="@{'/user/contacts/updateContactView/' + ${contact.id}}">
                                               <i class="fa-solid w-6 h-6 fa-pen"></i>
                                             </a>
                     
                                             <!-- view contact -->
-                                            <a data-th-href="@{'/user/contacts/' + ${contact.id}}">
+                                            <a data-th-href="@{'/user/contacts/view/' + ${contact.id}}">
                                                 <i class="fa-solid fa-eye"></i>
                                             </a>
                                           </div>

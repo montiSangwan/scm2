@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-th-replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
 <head>
-    <title>Add Contact</title>
+    <title>Update Contact</title>
 </head>
 <body>
     
@@ -22,11 +22,10 @@
 
                             <div data-th-replace="~{message::messagebox}"></div>
 
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Add Contact</h5>
-                            <p class="font-normal text-gray-400 dark:text-gray-400">This contact will be stored on cloud...</p>
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Update Contact</h5>
 
                             <!--enctype used to send multi part data-->
-                            <form data-th-action="@{'/user/contacts/process-contact'}" 
+                            <form data-th-action="@{'/user/contacts/process-update-contact/' + ${contactId}}" 
                                     data-th-object="${contactForm}"
                                     method="post" 
                                     enctype="multipart/form-data"
@@ -123,11 +122,11 @@
                                     <input data-th-field="*{contactImage}" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="image_file_input" type="file">
 
                                     <!--image preview only when if selected-->
-                                    <img class="max-h-52 mx-auto rounded-lg shadow m-3 mt-4" src="" id="upload_image_preview" alt="" />
+                                    <img data-th-src="*{picture}" class="max-h-52 mx-auto rounded-lg shadow m-3 mt-4" id="upload_image_preview" alt="" />
                                 </div>
 
                                 <div class="button_container mb-3 text-center">
-                                    <button type="submit" class="px-3 py-2 rounded bg-gray-800 text-white hover:bg-gray-900 dark:bg-blue-600 dark:hover:bg-blue-800">Add Contact</button>
+                                    <button type="submit" class="px-3 py-2 rounded bg-gray-800 text-white hover:bg-gray-900 dark:bg-blue-600 dark:hover:bg-blue-800">Update Contact</button>
                                     <button type="reset" class="px-3 py-2 rounded bg-green-700 text-white hover:bg-green-900 dark:bg-green-700 dark:hover:bg-green-900">Reset Contact</button>
                                 </div>
 

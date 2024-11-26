@@ -43,6 +43,7 @@ public class ContactServiceImpl implements ContactService {
         dbContact.setFavourite(contact.isFavourite());
         dbContact.setWebsiteLink(contact.getWebsiteLink());
         dbContact.setLinkedInLink(contact.getLinkedInLink());
+        dbContact.setCloudinaryImagePublicId(contact.getCloudinaryImagePublicId());
 
         return contactDao.save(dbContact);
     }

@@ -77,23 +77,25 @@ public class ContactController {
         String userName = UsernameHelper.getEmailOfLoggedInUser(authentication);
         User user = userService.getUserByEmail(userName);
 
-        // upload image on cloud/server
-        String imageFileName = UUID.randomUUID().toString();
-        String fileURL = imageService.uploadImage(contactForm.getContactImage(), imageFileName);
-
         Contact contact = new Contact();
         contact.setName(contactForm.getName());
         contact.setEmail(contactForm.getEmail());
         contact.setPhoneNumber(contactForm.getPhoneNumber());
         contact.setAddress(contactForm.getAddress());
         contact.setDescription(contactForm.getDescription());
-        contact.setFavourite(contactForm.isFavorite());
+        contact.setFavourite(contactForm.isFavourite());
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setLinkedInLink(contactForm.getLinkedInLink());
         contact.setUser(user);
         
-        contact.setPicture(fileURL);
-        contact.setCloudinaryImagePublicId(imageFileName);
+        if (Objects.nonNull(contactForm.getContactImage()) || !contactForm.getContactImage().isEmpty()) {
+            // upload image on cloud/server
+            String imageFileName = UUID.randomUUID().toString();
+            String fileURL = imageService.uploadImage(contactForm.getContactImage(), imageFileName);
+
+            contact.setPicture(fileURL);
+            contact.setCloudinaryImagePublicId(imageFileName);
+        }
 
         Contact savedContact = contactService.save(contact);
         System.out.println(savedContact);
@@ -147,7 +149,6 @@ public class ContactController {
             @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
             @RequestParam(value = "direction", defaultValue = "asc") String direction) {
     
-
         String field = contactSearchForm.getField();
         String keyword = contactSearchForm.getKeyword();
 
@@ -187,7 +188,7 @@ public class ContactController {
         return "redirect:/user/contacts";
     }
 
-    @RequestMapping("/{id}")
+    @RequestMapping("/view/{id}")
     public String viewContact(@PathVariable("id") String contactId, Model model) {
         Contact contact = contactService.getById(contactId);
         if (Objects.nonNull(contact)) {
@@ -196,5 +197,78 @@ public class ContactController {
         } else {
             return "redirect:/user/contacts";
         }
+    }
+
+    @RequestMapping("/updateContactView/{id}")
+    public String updateContactView(@PathVariable("id") String contactId, Model model) {
+        Contact contact = contactService.getById(contactId);
+        if (Objects.nonNull(contact)) {
+
+            ContactForm contactForm = new ContactForm();
+            contactForm.setName(contact.getName());
+            contactForm.setEmail(contact.getEmail());
+            contactForm.setPhoneNumber(contact.getPhoneNumber());
+            contactForm.setAddress(contact.getAddress());
+            contactForm.setDescription(contact.getDescription());
+            contactForm.setFavourite(contact.isFavourite());
+            contactForm.setWebsiteLink(contact.getWebsiteLink());
+            contactForm.setLinkedInLink(contact.getLinkedInLink());
+            contactForm.setPicture(contact.getPicture());
+
+            model.addAttribute("contactForm", contactForm);
+            model.addAttribute("contactId", contact.getId());
+            return "user/update_contact_view";
+        } else {
+            return "redirect:/user/contacts";
+        }
+    }
+
+    @PostMapping("/process-update-contact/{contactId}")
+    public String processUpdateContactForm(@Valid @ModelAttribute ContactForm contactForm, @PathVariable("contactId") String contactId,
+            Authentication authentication, HttpSession httpSession, BindingResult bindingResult) {
+
+        // validate form data
+        if (bindingResult.hasErrors()) {
+
+            httpSession.setAttribute("message", Message.builder()
+                    .content("Please correct the following errors")
+                    .type(MessageType.red)
+                    .build());
+
+            return "user/update_contact_view";
+        }
+
+        Contact contact = contactService.getById(contactId);
+        contact.setId(contactId);
+        contact.setName(contactForm.getName());
+        contact.setEmail(contactForm.getEmail());
+        contact.setPhoneNumber(contactForm.getPhoneNumber());
+        contact.setAddress(contactForm.getAddress());
+        contact.setDescription(contactForm.getDescription());
+        contact.setFavourite(contactForm.isFavourite());
+        contact.setWebsiteLink(contactForm.getWebsiteLink());
+        contact.setLinkedInLink(contactForm.getLinkedInLink());
+
+        if (Objects.nonNull(contactForm.getContactImage()) || !contactForm.getContactImage().isEmpty()) {
+            // upload image on cloud/server
+            String imageFileName = UUID.randomUUID().toString();
+            String fileURL = imageService.uploadImage(contactForm.getContactImage(), imageFileName);
+
+            contact.setPicture(fileURL);
+            contact.setCloudinaryImagePublicId(imageFileName);
+        }
+
+        Contact updatedContact = contactService.update(contact);
+        System.out.println(updatedContact);
+
+        // message = "Contact creation successful"
+        Message message = Message.builder()
+                .content("Contact updated successfully")
+                .type(MessageType.green)
+                .build();
+        httpSession.setAttribute("message", message);
+
+        // redirect to add contact page
+        return "redirect:/user/contacts/view/" + contactId;
     }
 }
