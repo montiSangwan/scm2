@@ -1,6 +1,5 @@
 package com.scm.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -15,11 +14,19 @@ import com.scm.service.SecurityCustomUserDetailService;
 @Configuration
 public class SecurityConfig {
 
-    @Autowired
-    private SecurityCustomUserDetailService userDetailService;
+    private final SecurityCustomUserDetailService userDetailService;
 
-    @Autowired
-    private OAuthAuthenticationSuccessHandler oAuthAuthenticationSuccessHandler;
+    private final OAuthAuthenticationSuccessHandler oAuthAuthenticationSuccessHandler;
+
+    private final AuthFailureHandler authFailureHandler;
+
+    public SecurityConfig(SecurityCustomUserDetailService userDetailService,
+            OAuthAuthenticationSuccessHandler oAuthAuthenticationSuccessHandler,
+            AuthFailureHandler authFailureHandler) {
+        this.userDetailService = userDetailService;
+        this.oAuthAuthenticationSuccessHandler = oAuthAuthenticationSuccessHandler;
+        this.authFailureHandler = authFailureHandler;
+    }
 
     // configuraiton of authentication provider for spring security
     @Bean
@@ -58,6 +65,9 @@ public class SecurityConfig {
             /* formLogin.failureForwardUrl("/login?error=true"); this requires postMapping of login*/
             formLogin.usernameParameter("email");
             formLogin.passwordParameter("password");
+
+            // if authentication is failed
+            formLogin.failureHandler(authFailureHandler); 
         });
 
         // for logout 

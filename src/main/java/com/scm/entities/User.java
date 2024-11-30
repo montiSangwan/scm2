@@ -39,7 +39,7 @@ public class User implements UserDetails {
     @Column(length = 1000)
     private String about;
     private String profilePic;
-    private boolean enabled = true;
+    private boolean enabled = false; // by default user is disabled
     private boolean emailVerified = false;
     private boolean phoneVerified = false;
 
@@ -75,6 +75,11 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return this.email;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
     }
 
     /*
