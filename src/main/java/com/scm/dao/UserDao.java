@@ -11,4 +11,8 @@ import com.scm.entities.User;
 public interface UserDao extends JpaRepository<User, String> {
     
     Optional<User> findByEmail(String email);
+
+    Optional<User> findByEmailAndPassword(String email, String password);
+
+    Optional<User> findByEmailToken(String emailToken);
 }
