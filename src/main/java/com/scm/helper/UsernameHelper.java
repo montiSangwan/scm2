@@ -3,7 +3,9 @@ package com.scm.helper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UsernameHelper {
     
     public static String getEmailOfLoggedInUser(Authentication authentication) {

@@ -39,9 +39,12 @@ public class User implements UserDetails {
     @Column(length = 1000)
     private String about;
     private String profilePic;
+
+    // for email verification
     private boolean enabled = false; // by default user is disabled
     private boolean emailVerified = false;
     private boolean phoneVerified = false;
+    private String emailToken;
 
     // to store the default value
     @Enumerated(value = EnumType.STRING)

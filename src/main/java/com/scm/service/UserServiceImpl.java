@@ -1,28 +1,33 @@
 package com.scm.service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.scm.dao.UserDao;
 import com.scm.entities.User;
 import com.scm.helper.AppConstants;
+import com.scm.helper.EmailHelper;
 import com.scm.helper.ResourceNotFoundException;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
 
+    private final EmailService emailService;
+
     // to store the encoded password in db
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserDao userDao, EmailServiceImpl emailService, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
+        this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
     }
-
 
     @Override
     public User saveUser(User user) {
@@ -36,7 +41,14 @@ public class UserServiceImpl implements UserService {
         // set the user role
         user.setRoleList(List.of(AppConstants.ROLE_USER));
 
-        return userDao.save(user);
+        // to send verification link after saving new user to his email
+        String emailToken = UUID.randomUUID().toString();
+        String emailLink = EmailHelper.getLinkForEmailVerification(emailToken);
+        emailService.sendEmail(user.getEmail(), "Verify Account: SCM", emailLink);
+
+        user.setEmailToken(emailToken);
+        User savedUser = userDao.save(user);
+        return savedUser;
     }
 
     @Override
