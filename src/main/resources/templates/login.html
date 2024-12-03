@@ -14,11 +14,13 @@
                         <div class="card block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Login Here</h5>
-                    <p class="font-normal text-gray-400 dark:text-gray-400">Start managing contacts..</p>
+                    <p class="font-normal text-gray-400 dark:text-gray-400 mb-4">Start managing contacts..</p>
 
                     <div class="text-red-600 text-center my-3" data-th-if="${param.error}">
                         Invalid username and password.
                     </div>
+
+                    <div data-th-replace="~{message :: messagebox}"></div>
 
                     <form method="post" data-th-action="@{'/authenticate'}" class="mt-5">
 
