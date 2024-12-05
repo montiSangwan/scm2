@@ -65,9 +65,9 @@
                             <!--export data to excel button-->
                             <!--onclick="exportData()"-->
                             <div>
-                                <button onclick="exportData()" type="button" class="px-3 py-2 bg-green-800 text-white rounded">
-                                    Export
-                                </button>
+                                <a data-th-href="@{'/user/contacts/export-contacts'}" class="px-3 py-2 bg-green-800 text-white rounded">
+                                    Export Contacts
+                                </a>
                             </div>
                         </div>
                         
@@ -226,21 +226,6 @@
         </div>
 
     </div>
-
-
-    <!--cdn used for table tp excel-->
-    <script src="https://cdn.jsdelivr.net/npm/@linways/table-to-excel@1.0.4/dist/tableToExcel.min.js"></script>
-    <!--export data to excel js code implementation-->
-    <script>
-        function exportData() {
-            TableToExcel.convert(document.getElementById("contact-table"), {
-                name: "contacts.xlsx",
-                sheet: {
-                    name: "Sheet 1",
-                },
-            });
-        }
-    </script>
 
 </body>
 </html>
