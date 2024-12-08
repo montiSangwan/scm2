@@ -63,10 +63,14 @@ public class PageController {
         return "register";
     }
 
-    // @Valid -> to validate the object
-    // ModelAttribute -> populate the userForm model attribute with data from a form submitted to the processRegister endpoint
-    // BindingResult -> if there any validation failure then that error save in bindingResult object
-    // HttpSession -> to show successful message on current session
+    /* @Valid -> to validate the object
+    *  ModelAttribute -> populate the userForm model attribute with data from a form submitted to the processRegister endpoint
+    *  BindingResult -> if there any validation failure then that error save in bindingResult object
+    *  HttpSession -> to show successful message on current session
+    
+    *  @Valid annotation is present before @ModelAttribute.
+    *  BindingResult immediately follows @ModelAttribute. 
+    */
     @PostMapping("/do-register")
     public String processRegister(@Valid @ModelAttribute UserForm userForm, BindingResult bindingResult, HttpSession httpSession) {
 

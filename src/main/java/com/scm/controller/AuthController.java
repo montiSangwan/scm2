@@ -48,7 +48,7 @@ public class AuthController {
             } else {
                 Message message = Message.builder()
                         .content("Email not verified ! Token is not associated with user.")
-                        .type(MessageType.green)
+                        .type(MessageType.red)
                         .build();
                 httpSession.setAttribute("message", message);
 
@@ -58,7 +58,7 @@ public class AuthController {
 
         Message message = Message.builder()
                 .content("Email not verified ! Token is not associated with user.")
-                .type(MessageType.green)
+                .type(MessageType.red)
                 .build();
         httpSession.setAttribute("message", message);
 

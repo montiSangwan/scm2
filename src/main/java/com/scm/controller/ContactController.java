@@ -59,9 +59,12 @@ public class ContactController {
         return "user/add_contact";
     }
 
+    /* @Valid annotation is present before @ModelAttribute.
+    *  BindingResult immediately follows @ModelAttribute. 
+    */
     @PostMapping("/process-contact")
-    public String processContactForm(@Valid @ModelAttribute ContactForm contactForm, Authentication authentication,
-            HttpSession httpSession, BindingResult bindingResult) {
+    public String processContactForm(@Valid @ModelAttribute ContactForm contactForm, BindingResult bindingResult, Authentication authentication,
+            HttpSession httpSession) {
 
         // validate form data
         if (bindingResult.hasErrors()) {
@@ -223,9 +226,12 @@ public class ContactController {
         }
     }
 
+    /* @Valid annotation is present before @ModelAttribute.
+    *  BindingResult immediately follows @ModelAttribute. 
+    */
     @PostMapping("/process-update-contact/{contactId}")
-    public String processUpdateContactForm(@Valid @ModelAttribute ContactForm contactForm, @PathVariable("contactId") String contactId,
-            Authentication authentication, HttpSession httpSession, BindingResult bindingResult) {
+    public String processUpdateContactForm(@Valid @ModelAttribute ContactForm contactForm, BindingResult bindingResult, @PathVariable("contactId") String contactId,
+            Authentication authentication, HttpSession httpSession) {
 
         // validate form data
         if (bindingResult.hasErrors()) {
