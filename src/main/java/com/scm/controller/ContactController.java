@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.scm.entities.Contact;
 import com.scm.entities.User;
@@ -94,19 +95,23 @@ public class ContactController {
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setLinkedInLink(contactForm.getLinkedInLink());
         contact.setUser(user);
+
+        MultipartFile contactImage = contactForm.getContactImage();
+        // Validate the image before proceeding
+        imageService.validateImage(contactImage);  // This is where the validation happens
         
-        if (Objects.nonNull(contactForm.getContactImage()) && contactForm.getContactImage().getInputStream().available() > 0) {
+        if (Objects.nonNull(contactImage) && contactImage.getInputStream().available() > 0) {
             // upload image on cloud/server
             try {
                 String imageFileName = UUID.randomUUID().toString();
-                String fileURL = imageService.uploadImage(contactForm.getContactImage(), imageFileName);
+                String fileURL = imageService.uploadImage(contactImage, imageFileName);
                 
                 contact.setPicture(fileURL);
                 contact.setCloudinaryImagePublicId(imageFileName);
             
             } catch (Exception e) {
                 log.error("An error occurred while uploading the image: {}" + e.getMessage());
-                throw new ImageValidationException("Image upload failed due to an unexpected error. {}", e.getMessage());
+                throw new ImageValidationException("Image upload failed due to an unexpected error. %s", e.getMessage());
             }
         }
 
@@ -265,18 +270,22 @@ public class ContactController {
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setLinkedInLink(contactForm.getLinkedInLink());
 
-        if (Objects.nonNull(contactForm.getContactImage()) && contactForm.getContactImage().getInputStream().available() > 0) {
+        MultipartFile contactImage = contactForm.getContactImage();
+        // Validate the image before proceeding
+        imageService.validateImage(contactImage);  // This is where the validation happens
+
+        if (Objects.nonNull(contactImage) && contactImage.getInputStream().available() > 0) {
             // upload image on cloud/server
             try {
                 String imageFileName = UUID.randomUUID().toString();
-                String fileURL = imageService.uploadImage(contactForm.getContactImage(), imageFileName);
+                String fileURL = imageService.uploadImage(contactImage, imageFileName);
                 
                 contact.setPicture(fileURL);
                 contact.setCloudinaryImagePublicId(imageFileName);
             
             } catch (Exception e) {
                 log.error("An error occurred while uploading the image: {}" + e.getMessage());
-                throw new ImageValidationException("Image upload failed due to an unexpected error. {}", e.getMessage());
+                throw new ImageValidationException("Image upload failed due to an unexpected error. %s", e.getMessage());
             }
         }
 

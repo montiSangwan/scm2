@@ -1,5 +1,8 @@
 package com.scm.helper;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class AppConstants {
     
     public static final String ROLE_USER = "ROLE_USER";
@@ -19,4 +22,10 @@ public class AppConstants {
     public static final String SEARCH_BY_EMAIL = "email";
 
     public static final String SEARCH_BY_PHONE_NUMBER = "phoneNumber";
+
+    // Define the maximum allowed image size (e.g., 5 MB)
+    public static final long MAX_FILE_SIZE = 5 * 1024 * 1024;  // 5 MB in bytes
+
+    // Define supported image types
+    public static final List<String> SUPPORTED_IMAGE_TYPES = Arrays.asList("image/jpg", "image/jpeg", "image/png");
 }
