@@ -18,7 +18,6 @@ import com.scm.entities.Providers;
 import com.scm.entities.User;
 import com.scm.helper.AppConstants;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -32,7 +31,7 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-            Authentication authentication) throws IOException, ServletException {
+            Authentication authentication) throws IOException {
 
             OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
             String authorizedClientRegistrationId = token.getAuthorizedClientRegistrationId();

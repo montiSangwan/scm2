@@ -45,7 +45,7 @@ public class ImageServiceImpl implements ImageService {
             }
 
         } catch (IOException e) {
-            log.error("Error while uploading image to cloudinary", e.getMessage());
+            log.error("Error while uploading image to cloudinary: {}", e.getMessage());
             return null;
         }
     }

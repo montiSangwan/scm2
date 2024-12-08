@@ -49,8 +49,7 @@ public class UserServiceImpl implements UserService {
         emailService.sendEmail(user.getEmail(), "Verify Account: SCM", emailLink);
 
         user.setEmailToken(emailToken);
-        User savedUser = userDao.save(user);
-        return savedUser;
+        return userDao.save(user);
     }
 
     @Override

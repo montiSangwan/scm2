@@ -4,6 +4,7 @@ import static com.scm.helper.AppConstants.SEARCH_BY_EMAIL;
 import static com.scm.helper.AppConstants.SEARCH_BY_NAME;
 import static com.scm.helper.AppConstants.SEARCH_BY_PHONE_NUMBER;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -23,6 +24,7 @@ import com.scm.entities.Contact;
 import com.scm.entities.User;
 import com.scm.forms.ContactForm;
 import com.scm.forms.ContactSearchForm;
+import com.scm.helper.ImageValidationException;
 import com.scm.helper.Message;
 import com.scm.helper.MessageType;
 import com.scm.helper.UsernameHelper;
@@ -32,9 +34,11 @@ import com.scm.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/user/contacts")
+@Slf4j
 public class ContactController {
 
     private final ContactService contactService;
@@ -64,7 +68,7 @@ public class ContactController {
     */
     @PostMapping("/process-contact")
     public String processContactForm(@Valid @ModelAttribute ContactForm contactForm, BindingResult bindingResult, Authentication authentication,
-            HttpSession httpSession) {
+            HttpSession httpSession) throws IOException {
 
         // validate form data
         if (bindingResult.hasErrors()) {
@@ -91,13 +95,19 @@ public class ContactController {
         contact.setLinkedInLink(contactForm.getLinkedInLink());
         contact.setUser(user);
         
-        if (Objects.nonNull(contactForm.getContactImage()) || !contactForm.getContactImage().isEmpty()) {
+        if (Objects.nonNull(contactForm.getContactImage()) && contactForm.getContactImage().getInputStream().available() > 0) {
             // upload image on cloud/server
-            String imageFileName = UUID.randomUUID().toString();
-            String fileURL = imageService.uploadImage(contactForm.getContactImage(), imageFileName);
-
-            contact.setPicture(fileURL);
-            contact.setCloudinaryImagePublicId(imageFileName);
+            try {
+                String imageFileName = UUID.randomUUID().toString();
+                String fileURL = imageService.uploadImage(contactForm.getContactImage(), imageFileName);
+                
+                contact.setPicture(fileURL);
+                contact.setCloudinaryImagePublicId(imageFileName);
+            
+            } catch (Exception e) {
+                log.error("An error occurred while uploading the image: {}" + e.getMessage());
+                throw new ImageValidationException("Image upload failed due to an unexpected error. {}", e.getMessage());
+            }
         }
 
         Contact savedContact = contactService.save(contact);
@@ -231,7 +241,7 @@ public class ContactController {
     */
     @PostMapping("/process-update-contact/{contactId}")
     public String processUpdateContactForm(@Valid @ModelAttribute ContactForm contactForm, BindingResult bindingResult, @PathVariable("contactId") String contactId,
-            Authentication authentication, HttpSession httpSession) {
+            HttpSession httpSession) throws IOException {
 
         // validate form data
         if (bindingResult.hasErrors()) {
@@ -255,13 +265,19 @@ public class ContactController {
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setLinkedInLink(contactForm.getLinkedInLink());
 
-        if (Objects.nonNull(contactForm.getContactImage()) || !contactForm.getContactImage().isEmpty()) {
+        if (Objects.nonNull(contactForm.getContactImage()) && contactForm.getContactImage().getInputStream().available() > 0) {
             // upload image on cloud/server
-            String imageFileName = UUID.randomUUID().toString();
-            String fileURL = imageService.uploadImage(contactForm.getContactImage(), imageFileName);
-
-            contact.setPicture(fileURL);
-            contact.setCloudinaryImagePublicId(imageFileName);
+            try {
+                String imageFileName = UUID.randomUUID().toString();
+                String fileURL = imageService.uploadImage(contactForm.getContactImage(), imageFileName);
+                
+                contact.setPicture(fileURL);
+                contact.setCloudinaryImagePublicId(imageFileName);
+            
+            } catch (Exception e) {
+                log.error("An error occurred while uploading the image: {}" + e.getMessage());
+                throw new ImageValidationException("Image upload failed due to an unexpected error. {}", e.getMessage());
+            }
         }
 
         Contact updatedContact = contactService.update(contact);
