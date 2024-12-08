@@ -5,13 +5,21 @@
 </head>
 <body>
     
-    <div id="content" class="text-center mt-5 md:w-1/2 mx-auto">
-        <div data-th-replace="~{message :: messagebox}"></div>
-
-        <a data-th-href="@{'/login'}" class="bg-green-900 mt-2 text-white px-3 py-2 rounded">
+    <div id="content" class="text-center mt-5 md:w-1/2 mx-auto p-6 bg-white rounded-xl shadow-lg">
+        <div data-th-replace="~{message :: messagebox}" class="mb-4"></div>
+    
+        <p class="text-lg text-gray-600 mb-6">Please use your credentials to access your account.</p>
+    
+        <a data-th-href="@{'/login'}" class="bg-green-700 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-800 transition-colors duration-300">
             Login
         </a>
-        
+    
+        <div class="mt-4">
+            <p class="text-sm text-gray-500">
+                Don't have an account? 
+                <a data-th-href="@{'/register'}" class="text-blue-500 hover:underline">Sign up here</a>.
+            </p>
+        </div>
     </div>
 
 </body>
