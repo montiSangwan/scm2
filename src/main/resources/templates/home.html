@@ -1,11 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" data-th-replace="~{base :: parent(~{::#content}, ~{::title}, ~{})}">
 <head>
-    <title>Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Management App</title>
 </head>
 <body>
-    
-    <div id="content">Home</div>
+
+    <div id="content">
+
+        <div class="container mt-4">
+            <div class="grid grid-cols-12 gap-6">
+                <!-- Centered Card Content in the Middle 6 Columns -->
+                <div class="col-span-12 lg:col-span-6 lg:col-start-4 max-w-full mx-auto bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                    
+                    <img class="rounded-t-xl transition-transform transform" src="https://cdn.stocksnap.io/img-thumbs/960w/phone-cellphone_FA9F1TRJFZ.jpg" alt="Contact Management App" />
+
+                    <div class="p-6 text-white">
+                        <h5 class="mb-4 text-3xl font-semibold tracking-tight text-white hover:text-yellow-300 transition-colors duration-300 ease-in-out">Contact Management App</h5>
+
+                        <p class="mb-4 text-lg font-normal text-gray-100 opacity-90">
+                            A <b>Contact Management App</b> is a software application that allows users to organize and store contact information, such as names, phone numbers, email addresses, and other details, in a digital format.
+                        </p>
+                        <p class="mb-6 text-lg font-normal text-gray-100 opacity-90">
+                            It is a useful tool for anyone who needs to manage a large number of contacts and stay on top of their communication and networking activities.
+                        </p>
+
+
+                        <div class="text-center">
+                            <a data-th-href="@{'/register'}" class="inline-flex items-center px-6 py-3 text-lg font-medium text-center text-white bg-yellow-500 rounded-full hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300 transform hover:scale-105 transition-transform duration-200 ease-in-out">
+                                Start Managing Contacts
+                                <svg class="w-4 h-4 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 </body>
 </html>
